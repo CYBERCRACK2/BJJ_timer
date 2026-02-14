@@ -1,5 +1,5 @@
 import 'package:bjj_timer/screens/absolute_home.dart';
-import 'package:bjj_timer/screens/bjj_timer_home.dart';
+import 'package:bjj_timer/screens/info.dart';
 import 'package:flutter/material.dart';
 import 'core/app_theme.dart';
 
@@ -18,14 +18,23 @@ class MainApp extends StatelessWidget {
       darkTheme: BjjTheme.darkTheme,
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Configurar Tiempo", textAlign: TextAlign.center),
+          title: Text("BJJ home", textAlign: TextAlign.center),
           actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton(
-                onPressed: () => {},
-                icon: Icon(Icons.more_vert),
-              ),
+            Builder(
+              builder: (context) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Info()),
+                      );
+                    },
+                    icon: Icon(Icons.info),
+                  ),
+                );
+              },
             ),
           ],
         ),
