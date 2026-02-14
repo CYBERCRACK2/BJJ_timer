@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:bjj_timer/core/sound_manager.dart';
@@ -38,15 +39,20 @@ class BjjTimerCoreState extends State<BjjTimerCore> {
 
   @override
   void initState() {
+    // Pantalla completa
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    // Mantiene la pantalla encendida
     WakelockPlus.enable();
     super.initState();
-    // Mantiene la pantalla encendida
     _startPhase(TimerPhase.preparation);
   }
 
   @override
   void dispose() {
     try {
+      // Quitar la pantalla completa
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
       // 1. Limpiamos procesos de Dart
       _timer?.cancel();
 

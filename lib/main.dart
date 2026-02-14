@@ -12,6 +12,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "BJJ Timer",
       theme: BjjTheme.lightTheme,
       darkTheme: BjjTheme.darkTheme,
       home: Scaffold(
@@ -33,12 +34,3 @@ class MainApp extends StatelessWidget {
     );
   }
 }
-
-
-// Work Time: El tiempo de la lucha.
-
-// Rest Time: El tiempo de descanso entre rondas.
-
-// Rounds: El número de veces que se repite el ciclo.
-
-// Audio cues: Avisos sonoros (clave en BJJ porque no siempre puedes mirar la pantalla).

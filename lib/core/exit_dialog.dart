@@ -17,14 +17,14 @@ class ExitDialogs {
             title: Text(
               question,
               style: TextStyle(
-                fontSize: (screenWidth * 0.05).clamp(16.0, 24.0),
+                fontSize: (screenWidth * 0.07).clamp(16.0, 28.0),
                 fontWeight: FontWeight.bold,
               ),
             ),
             content: Text(
               adviceText,
               style: TextStyle(
-                fontSize: (screenWidth * 0.04).clamp(14.0, 18.0),
+                fontSize: (screenWidth * 0.06).clamp(14.0, 22.0),
               ),
             ),
             actions: [

@@ -18,27 +18,24 @@ class TimeFormatter extends TextInputFormatter {
 
     // 4. LÓGICA INTELIGENTE DE RE-CÁLCULO
     // Si tenemos al menos 3 dígitos, verificamos si los segundos (decenas) son > 5
-    if (digits.length >= 3) {
-      int minutes = int.parse(digits.substring(0, digits.length - 2));
-      int seconds = int.parse(digits.substring(digits.length - 2));
+    // if (digits.length >= 3) {
+    //   int minutes = int.parse(digits.substring(0, digits.length - 2));
+    //   int seconds = int.parse(digits.substring(digits.length - 2));
 
-      // Si los segundos son 60 o más (ej: usuario puso un 6 o 7 en la posición 3)
-      if (seconds >= 60) {
-        int extraMinutes = seconds ~/ 60;
-        int remainingSeconds = seconds % 60;
+    //   // Si los segundos son 60 o más (ej: usuario puso un 6 o 7 en la posición 3)
+    //   if (seconds >= 60) {
+    //     int extraMinutes = seconds ~/ 60;
+    //     int remainingSeconds = seconds % 60;
 
-        minutes += extraMinutes;
-        seconds = remainingSeconds;
+    //     minutes += extraMinutes;
+    //     seconds = remainingSeconds;
 
-        // Limitar minutos a 99 para evitar que el string crezca infinitamente
-        if (minutes > 99) minutes = 99;
-
-        // Re-armar el string de dígitos corregido
-        String mStr = minutes.toString().padLeft(2, '0');
-        String sStr = seconds.toString().padLeft(2, '0');
-        digits = mStr + sStr;
-      }
-    }
+    //     // Re-armar el string de dígitos corregido
+    //     String mStr = minutes.toString().padLeft(2, '0');
+    //     String sStr = seconds.toString().padLeft(2, '0');
+    //     digits = mStr + sStr;
+    //   }
+    // }
 
     // 5. Aplicar el formato visual MM:SS
     String formatted = '';

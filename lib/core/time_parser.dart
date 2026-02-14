@@ -17,8 +17,15 @@ class TimeParser {
       return "0${digits[0]}:${digits.substring(1)}";
     } else {
       // "1245" -> "12:45" (Tomamos máximo 4 dígitos)
-      String minutes = digits.substring(0, 2);
       String seconds = digits.substring(2, 4);
+      String minutes = digits.substring(0, 2);
+
+      // "1265" -> "13:05"
+      if (int.parse(seconds) >= 60) {
+        seconds = (int.parse(seconds) - 60).toString().padLeft(2, "0");
+        minutes = (int.parse(minutes) + 1).toString().padLeft(2, "0");
+      }
+
       return "$minutes:$seconds";
     }
   }
