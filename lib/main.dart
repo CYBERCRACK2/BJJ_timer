@@ -1,3 +1,4 @@
+import 'package:bjj_timer/screens/absolute_home.dart';
 import 'package:bjj_timer/screens/bjj_timer_home.dart';
 import 'package:flutter/material.dart';
 import 'core/app_theme.dart';
@@ -28,7 +29,7 @@ class MainApp extends StatelessWidget {
             ),
           ],
         ),
-        body: BjjTimerHome(),
+        body: AbsoluteHome(),
       ),
       debugShowCheckedModeBanner: false,
     );
