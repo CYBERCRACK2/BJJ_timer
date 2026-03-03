@@ -1,7 +1,7 @@
-import 'package:bjj_timer/screens/absolute_home.dart';
-import 'package:bjj_timer/screens/info.dart';
+import 'package:bjj_timer/features/home/absolute_home.dart';
+import 'package:bjj_timer/features/info/info.dart';
 import 'package:flutter/material.dart';
-import 'core/app_theme.dart';
+import 'config/app_theme.dart';
 
 void main() {
   runApp(const MainApp());

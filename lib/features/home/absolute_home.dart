@@ -1,5 +1,5 @@
-import 'package:bjj_timer/screens/bjj_class_home.dart';
-import 'package:bjj_timer/screens/bjj_timer_home.dart';
+import 'package:bjj_timer/features/class/bjj_class_home.dart';
+import 'package:bjj_timer/features/timer/screens/bjj_timer_home.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 

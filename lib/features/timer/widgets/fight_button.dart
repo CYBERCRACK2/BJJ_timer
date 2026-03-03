@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bjj_timer/screens/bjj_timer_fight_home.dart';
+import 'package:bjj_timer/features/timer/screens/bjj_timer_fight_home.dart';
 
 class FightButton extends StatelessWidget {
   final String sparringTime;

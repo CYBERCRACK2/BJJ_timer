@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:bjj_timer/components/time_selector.dart';
-import 'package:bjj_timer/components/fight_button.dart';
+import 'package:bjj_timer/features/timer/widgets/time_selector.dart';
+import 'package:bjj_timer/features/timer/widgets/fight_button.dart';
 
 class BjjTimerHome extends StatefulWidget {
   const BjjTimerHome({super.key});

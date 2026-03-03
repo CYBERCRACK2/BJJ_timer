@@ -1,7 +1,7 @@
 import 'dart:math' as math;
-import 'package:bjj_timer/components/bjj_timer_core.dart';
+import 'package:bjj_timer/features/timer/widgets/bjj_timer_core.dart';
 import 'package:flutter/material.dart';
-import 'package:bjj_timer/core/exit_dialog.dart';
+import 'package:bjj_timer/shared/exit_dialog.dart';
 import 'package:bjj_timer/core/hide_buttons.dart';
 import 'package:bjj_timer/core/sound_manager.dart';
 

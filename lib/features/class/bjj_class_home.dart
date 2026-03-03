@@ -1,4 +1,4 @@
-import 'package:bjj_timer/components/simple_clock.dart';
+import 'package:bjj_timer/features/home/widgets/simple_clock.dart';
 import 'package:flutter/material.dart';
 
 class BjjClassHome extends StatelessWidget {
