@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-class BjjTheme {
+class AppTheme {
+  final bool isDarkMode;
+
+  AppTheme({required this.isDarkMode});
   // Define your seed colors here or pass them directly
-  static const Color _seedColorLight = Color(0xFFFFFFFF);
-  static const Color _seedColorDark = Color(0xFF011C26);
+  static const Color _seedColor = Color(0xFFFFFFFF);
 
   // Cambiar la fuente
   static const String fontFamilyName = 'Verdana';
@@ -47,23 +49,12 @@ class BjjTheme {
     ),
   );
 
-  // Light Theme Definition
-  static final ThemeData lightTheme = ThemeData(
+  ThemeData getTheme() => ThemeData(
     useMaterial3: true,
     textTheme: _bjjTextTheme,
     colorScheme: ColorScheme.fromSeed(
-      seedColor: _seedColorLight,
-      brightness: Brightness.light,
-    ),
-  );
-
-  // Dark Theme Definition
-  static final ThemeData darkTheme = ThemeData(
-    useMaterial3: true,
-    textTheme: _bjjTextTheme,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: _seedColorDark,
-      brightness: Brightness.dark,
+      seedColor: _seedColor,
+      brightness: isDarkMode ? Brightness.dark : Brightness.light,
     ),
   );
 }

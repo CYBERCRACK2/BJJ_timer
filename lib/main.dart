@@ -14,8 +14,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "BJJ Timer",
-      theme: BjjTheme.lightTheme,
-      darkTheme: BjjTheme.darkTheme,
+      theme: AppTheme(isDarkMode: false).getTheme(),
+      darkTheme: AppTheme(isDarkMode: true).getTheme(),
       home: Scaffold(
         appBar: AppBar(
           title: Text("BJJ home", textAlign: TextAlign.center),
