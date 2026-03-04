@@ -3,9 +3,19 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'timer_provider.g.dart';
 
 @riverpod
-class Sparringtime extends _$Sparringtime {
+class SparringTime extends _$SparringTime {
   @override
-  String build() {
-    return "05:00";
-  }
+  String build() => "05:00";
+}
+
+@riverpod
+class RestTime extends _$RestTime {
+  @override
+  String build() => "01:00";
+}
+
+@riverpod
+class Rounds extends _$Rounds {
+  @override
+  int build() => 10;
 }
