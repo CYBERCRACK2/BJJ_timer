@@ -5,7 +5,7 @@ class AppTheme {
 
   AppTheme({required this.isDarkMode});
   // Define your seed colors here or pass them directly
-  static const Color _seedColor = Color(0xFFFFFFFF);
+  static const Color _seedColor = Color.fromARGB(255, 118, 4, 0);
 
   // Cambiar la fuente
   static const String fontFamilyName = 'Verdana';

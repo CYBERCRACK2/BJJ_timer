@@ -1,5 +1,5 @@
-import 'package:bjj_timer/features/home/absolute_home.dart';
-import 'package:bjj_timer/features/info/info.dart';
+import 'package:bjj_timer/features/home/screens/absolute_home.dart';
+import 'package:bjj_timer/features/home/screens/info.dart';
 import 'package:flutter/material.dart';
 import 'config/app_theme.dart';
 
