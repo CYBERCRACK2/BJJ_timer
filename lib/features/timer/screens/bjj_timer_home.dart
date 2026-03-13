@@ -49,12 +49,14 @@ class _BjjTimerHomeState extends State<BjjTimerHome> {
                     onDecrement: () {
                       setState(() {
                         // Solo restamos si es mayor a 1 minuto (o 0)
-                        if (sparringTime.inMinutes > 0) {
+                        if (sparringTime.inSeconds > 29) {
                           sparringTime -= const Duration(seconds: 30);
                         }
                       });
                     },
-                    onManualInput: (val) => restTime = parsearDuration(val),
+                    onManualInput: (val) => setState(() {
+                      sparringTime = parsearDuration(val);
+                    }),
                   ),
                   SelectorBjj<Duration>(
                     label: "TIEMPO DE DESCANSO",
@@ -66,12 +68,14 @@ class _BjjTimerHomeState extends State<BjjTimerHome> {
                     onDecrement: () {
                       setState(() {
                         // Solo restamos si es mayor a 1 minuto (o 0)
-                        if (restTime.inMinutes > 0) {
+                        if (restTime.inSeconds > 29) {
                           restTime -= const Duration(seconds: 30);
                         }
                       });
                     },
-                    onManualInput: (val) => restTime = parsearDuration(val),
+                    onManualInput: (val) => setState(() {
+                      restTime = parsearDuration(val);
+                    }),
                   ),
                   SelectorBjj<int>(
                     label: "RONDAS",
