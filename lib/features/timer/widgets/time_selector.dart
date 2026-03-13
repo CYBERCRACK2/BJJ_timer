@@ -1,145 +1,117 @@
 // Pasar nuevos argumentos para hacer mas logica del otro lado
 //
-
-import 'package:flutter/material.dart';
 import 'package:bjj_timer/core/format_time.dart';
-import 'package:bjj_timer/core/time_parser.dart';
+import 'package:flutter/material.dart';
 
-class TimeSelectorBjj extends StatefulWidget {
-  final String name;
+class SelectorBjj<T> extends StatelessWidget {
+  final String label;
+  final T value;
+  final String textDisplay;
+  final VoidCallback onIncrement;
+  final VoidCallback onDecrement;
+  final Function(String) onManualInput;
   final bool isclock;
-  final String time;
-  final Function(String) onChanged;
 
-  const TimeSelectorBjj({
+  const SelectorBjj({
     super.key,
-    required this.name,
+    required this.label,
+    required this.value,
+    required this.textDisplay,
+    required this.onIncrement,
+    required this.onDecrement,
+    required this.onManualInput,
     this.isclock = true,
-    required this.time,
-    required this.onChanged,
   });
 
-  @override
-  State<TimeSelectorBjj> createState() => _TimeSelectorBjjState();
-}
-
-class _TimeSelectorBjjState extends State<TimeSelectorBjj> {
-  final FocusNode _focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Calculamos un tamaño base para la fuente y los iconos
         double baseUnit = constraints.maxWidth;
-        double fontSize = (baseUnit * 0.15).clamp(20.0, 80.0);
-        double iconSize = (baseUnit * 0.1).clamp(24.0, 48.0);
+        // Definimos un tamaño de icono proporcional al ancho
+        double iconSize = (baseUnit * 0.12).clamp(30.0, 60.0);
 
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.onPrimary,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  widget.name,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontSize: (baseUnit * 0.05).clamp(14.0, 24.0),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 8),
+                  Text(
+                    label.toUpperCase(),
+                    style: TextStyle(
+                      fontSize: baseUnit * 0.05,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.primary.withOpacity(0.7),
+                    ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      iconSize: iconSize,
-                      icon: const Icon(Icons.remove_circle_outline),
-                      onPressed: () {
-                        if (widget.isclock) {
-                          setState(() {
-                            String nuevoTiempo = TimeParser.subtractOneMinute(
-                              widget.time,
-                            );
-                            widget.onChanged(nuevoTiempo);
-                          });
-                        } else {
-                          setState(() {
-                            String nuevoTiempo = TimeParser.subtractOne(
-                              widget.time,
-                            );
-                            widget.onChanged(nuevoTiempo);
-                          });
-                        }
-                      },
-                    ),
-                    // Contenedor con ancho dinámico para el TextField
-                    SizedBox(
-                      width:
-                          baseUnit *
-                          0.6, // Ocupa el 40% del ancho de la tarjeta
-                      height: baseUnit * 0.2,
-                      child: TextField(
-                        focusNode: _focusNode,
-                        controller: TextEditingController(
-                          text: widget.time,
-                        ), // USA EL CONTROLADOR DEL STATE
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          if (widget.isclock)
-                            TimeFormatter()
-                          else
-                            RoundFormatter(),
-                        ],
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodyMedium?.copyWith(fontSize: fontSize),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          isDense: true,
-                          contentPadding: EdgeInsets.zero,
-                          hintText: widget.isclock ? "00:00" : "-",
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.remove_circle_outline),
+                          iconSize: iconSize,
+                          onPressed: onDecrement,
                         ),
-                        onSubmitted: (value) {
-                          setState(() {
-                            if (widget.isclock) {
-                              widget.onChanged(TimeParser.format(value));
-                            } else {
-                              widget.onChanged(value);
-                            }
-                          });
-                        },
-                        onEditingComplete: () {
-                          _focusNode.unfocus();
-                        },
-                      ),
+                        // 1. Usamos Expanded para que el área del número use todo el centro
+                        Expanded(
+                          child: Center(
+                            // 2. FittedBox hace que el contenido crezca hasta los límites
+                            child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: IntrinsicWidth(
+                                child: TextField(
+                                  // Nota: Crear el controller aquí puede mover el cursor al inicio al escribir.
+                                  // Si te pasa, considera pasar el controller desde el padre.
+                                  controller: TextEditingController(
+                                    text: textDisplay,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    if (isclock)
+                                      TimeFormatter()
+                                    else
+                                      RoundFormatter(),
+                                  ],
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize:
+                                        100, // Tamaño base grande para calidad de renderizado
+                                  ),
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    isDense: true,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                    ),
+                                  ),
+                                  onSubmitted: onManualInput,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.add_circle_outline),
+                          iconSize: iconSize,
+                          onPressed: onIncrement,
+                        ),
+                      ],
                     ),
-                    IconButton(
-                      iconSize: iconSize,
-                      icon: const Icon(Icons.add_circle_outline),
-                      onPressed: () {
-                        if (widget.isclock) {
-                          setState(() {
-                            String nuevoTiempo = TimeParser.addOneMinute(
-                              widget.time,
-                            );
-                            widget.onChanged(nuevoTiempo);
-                          });
-                        } else {
-                          setState(() {
-                            String nuevoTiempo = TimeParser.addOne(widget.time);
-                            widget.onChanged(nuevoTiempo);
-                          });
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
             ),
           ),
         );

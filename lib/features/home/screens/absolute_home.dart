@@ -56,6 +56,9 @@ class ModeSelect extends StatelessWidget {
 
     return FittedBox(
       child: ElevatedButton(
+        style: IconButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
         onPressed: onPressed,
         child: Padding(
           padding: const EdgeInsets.all(8.0),

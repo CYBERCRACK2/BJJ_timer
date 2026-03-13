@@ -7,48 +7,51 @@ class TimeFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    // 1. Extraer solo los números
+    // 1. Extraer SOLO números (esto elimina signos '-' automáticamente)
     String digits = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
 
-    // 2. Si se borra todo, regresamos vacío
-    if (digits.isEmpty) return newValue;
+    if (digits.isEmpty) {
+      return const TextEditingValue(
+        text: '',
+        selection: TextSelection.collapsed(offset: 0),
+      );
+    }
 
-    // 3. Limitar a 4 caracteres máximos (MMSS)
-    if (digits.length > 4) digits = digits.substring(0, 4);
+    // 2. Limitar a 4 caracteres (MMSS)
+    if (digits.length > 4) {
+      digits = digits.substring(0, 4);
+    }
 
-    // 4. LÓGICA INTELIGENTE DE RE-CÁLCULO
-    // Si tenemos al menos 3 dígitos, verificamos si los segundos (decenas) son > 5
-    // if (digits.length >= 3) {
-    //   int minutes = int.parse(digits.substring(0, digits.length - 2));
-    //   int seconds = int.parse(digits.substring(digits.length - 2));
+    // 3. Lógica de recalcular excedentes (ej: 62 segundos -> 1 min 02 seg)
+    if (digits.length >= 3) {
+      // Separamos los últimos dos dígitos como segundos y el resto como minutos
+      int totalSeconds = int.parse(digits.substring(digits.length - 2));
+      int totalMinutes = int.parse(digits.substring(0, digits.length - 2));
 
-    //   // Si los segundos son 60 o más (ej: usuario puso un 6 o 7 en la posición 3)
-    //   if (seconds >= 60) {
-    //     int extraMinutes = seconds ~/ 60;
-    //     int remainingSeconds = seconds % 60;
+      if (totalSeconds >= 60) {
+        totalMinutes += totalSeconds ~/ 60;
+        totalSeconds = totalSeconds % 60;
 
-    //     minutes += extraMinutes;
-    //     seconds = remainingSeconds;
-
-    //     // Re-armar el string de dígitos corregido
-    //     String mStr = minutes.toString().padLeft(2, '0');
-    //     String sStr = seconds.toString().padLeft(2, '0');
-    //     digits = mStr + sStr;
-    //   }
-    // }
-
-    // 5. Aplicar el formato visual MM:SS
-    String formatted = '';
-    for (int i = 0; i < digits.length; i++) {
-      formatted += digits[i];
-      // Insertar ":" después del segundo dígito si hay más
-      if (i == 1 && digits.length > 2) {
-        formatted += ':';
+        // Re-ensamblamos el string asegurando el formato
+        String mStr = totalMinutes.toString();
+        String sStr = totalSeconds.toString().padLeft(2, '0');
+        digits = mStr + sStr;
       }
     }
 
-    // 6. Validación final de longitud para el cursor
-    // (Evita que el cursor se pierda si MM crece a 3 dígitos, aunque lo limitamos a 99)
+    // 4. Aplicar el formato visual MM:SS
+    String formatted = '';
+    // Si solo hay 1 o 2 dígitos, son minutos (ej: "5" o "12")
+    if (digits.length <= 2) {
+      formatted = digits;
+    }
+    // Si hay más, ponemos los ":" antes de los últimos dos dígitos
+    else {
+      String minutesPart = digits.substring(0, digits.length - 2);
+      String secondsPart = digits.substring(digits.length - 2);
+      formatted = '$minutesPart:$secondsPart';
+    }
+
     return TextEditingValue(
       text: formatted,
       selection: TextSelection.collapsed(offset: formatted.length),
