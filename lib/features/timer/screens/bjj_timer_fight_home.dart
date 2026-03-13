@@ -1,5 +1,3 @@
-// hacer este archivo completo nuevamente
-
 import 'dart:math' as math;
 import 'package:bjj_timer/features/timer/widgets/bjj_timer_core.dart';
 import 'package:flutter/material.dart';
