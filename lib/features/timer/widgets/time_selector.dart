@@ -1,3 +1,6 @@
+// Pasar nuevos argumentos para hacer mas logica del otro lado
+//
+
 import 'package:flutter/material.dart';
 import 'package:bjj_timer/core/format_time.dart';
 import 'package:bjj_timer/core/time_parser.dart';

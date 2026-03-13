@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+// importar duration para facilitar el manejo de tiempos
 
 part 'timer_provider.g.dart';
 
@@ -6,6 +7,8 @@ part 'timer_provider.g.dart';
 class SparringTime extends _$SparringTime {
   @override
   String build() => "05:00";
+
+  // hacer las funciones paara sumar y restar los tiempos
 }
 
 @riverpod

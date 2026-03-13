@@ -1,3 +1,5 @@
+// Cambiar el pase de estados a riverpod
+
 import 'package:flutter/material.dart';
 import 'package:bjj_timer/features/timer/widgets/time_selector.dart';
 import 'package:bjj_timer/features/timer/widgets/fight_button.dart';
