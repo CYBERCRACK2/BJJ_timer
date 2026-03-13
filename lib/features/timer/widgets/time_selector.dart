@@ -46,9 +46,8 @@ class SelectorBjj<T> extends StatelessWidget {
                     style: TextStyle(
                       fontSize: baseUnit * 0.05,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.primary.withOpacity(0.7),
+                      color: Theme.of(context).colorScheme.primary,
+                      //.withOpacity(0.7),
                     ),
                   ),
                   Expanded(

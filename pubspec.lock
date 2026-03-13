@@ -496,8 +496,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-<<<<<<< HEAD
-=======
   mime:
     dependency: transitive
     description:
@@ -514,7 +512,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.6.3"
->>>>>>> state-manager-implementation
   native_toolchain_c:
     dependency: transitive
     description:
@@ -848,8 +845,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.9"
-<<<<<<< HEAD
-=======
   test_core:
     dependency: transitive
     description:
@@ -858,7 +853,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.15"
->>>>>>> state-manager-implementation
   typed_data:
     dependency: transitive
     description:
