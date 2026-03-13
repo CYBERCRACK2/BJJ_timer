@@ -1,3 +1,5 @@
+// modificar la clase y usar duration
+
 class TimeParser {
   /// Recibe un string de números y devuelve formato MM:SS
   /// Ejemplo: "5" -> "05:00", "130" -> "01:30"
