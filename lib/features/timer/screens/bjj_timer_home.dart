@@ -3,7 +3,7 @@
 import 'package:bjj_timer/core/format_duration.dart';
 import 'package:flutter/material.dart';
 import 'package:bjj_timer/features/timer/widgets/time_selector.dart';
-// import 'package:bjj_timer/features/timer/widgets/fight_button.dart';
+import 'package:bjj_timer/features/timer/widgets/fight_button.dart';
 import 'package:bjj_timer/core/duration_parser.dart';
 
 class BjjTimerHome extends StatefulWidget {
@@ -22,7 +22,7 @@ class _BjjTimerHomeState extends State<BjjTimerHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("MODO OPEN MAT", textAlign: TextAlign.center),
+        title: Text("MODO open mat", textAlign: TextAlign.center),
         centerTitle: true,
       ),
       body: Column(
@@ -98,11 +98,11 @@ class _BjjTimerHomeState extends State<BjjTimerHome> {
               ),
             ),
           ),
-          // FightButton(
-          //   sparringTime: sparringTime,
-          //   restTime: restTime,
-          //   rondas: rondas,
-          // ),
+          FightButton(
+            sparringTime: sparringTime,
+            restTime: restTime,
+            rondas: rondas,
+          ),
         ],
       ),
     );

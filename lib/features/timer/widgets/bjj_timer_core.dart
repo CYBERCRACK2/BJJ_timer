@@ -1,3 +1,4 @@
+import 'package:bjj_timer/core/format_duration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
@@ -7,23 +8,21 @@ import 'package:bjj_timer/core/sound_manager.dart';
 enum TimerPhase { preparation, fighting, resting, finished }
 
 class BjjTimerCore extends StatefulWidget {
-  final String fightTime; // Viene como "05:00"
-  final String restTime; // Viene como "01:00"
+  final Duration fightTime; // Viene como "05:00"
+  final Duration restTime; // Viene como "01:00"
   final int totalRounds;
-  final TextStyle? textStyle;
-  final bool isRound;
   final Function(Color)? onColorChange;
   final Function(bool)? onPauseToggle;
+  final Function(int)? onRoundChange;
 
   const BjjTimerCore({
     super.key,
     required this.fightTime,
     required this.restTime,
     required this.totalRounds,
-    required this.textStyle,
-    required this.isRound,
     this.onColorChange,
     this.onPauseToggle,
+    this.onRoundChange,
   });
 
   @override
@@ -81,20 +80,11 @@ class BjjTimerCoreState extends State<BjjTimerCore> {
     }
   }
 
-  // Convierte "MM:SS" a segundos totales
-  int _parseToSeconds(String time) {
-    List<String> parts = time.split(':');
-    int minutes = int.tryParse(parts[0]) ?? 0;
-    int seconds = parts.length > 1 ? int.tryParse(parts[1]) ?? 0 : 0;
-    return (minutes * 60) + seconds;
-  }
-
   void _startPhase(TimerPhase newPhase) {
     setState(() {
       _phase = newPhase;
       switch (newPhase) {
         case TimerPhase.preparation: // Fase de Preparacion
-          //debugPrint("$isPaused");
           if (!isPaused) {
             debugPrint("audio emitido");
             AudioService.playStartBell();
@@ -104,8 +94,10 @@ class BjjTimerCoreState extends State<BjjTimerCore> {
           }
           _currentSeconds = 3; // Tus 3 segundos de preparación
           break;
+
         case TimerPhase.fighting: // Fase de Pelea
-          _currentSeconds = _parseToSeconds(widget.fightTime);
+          _currentSeconds = widget.fightTime.inSeconds;
+          widget.onRoundChange?.call(_currentRound);
           break;
         case TimerPhase.resting: // Fase de Reseteo
           if (!isPaused) {
@@ -115,8 +107,9 @@ class BjjTimerCoreState extends State<BjjTimerCore> {
             AudioService.pause();
             AudioService.seek();
           } // Campana de descanso
-          _currentSeconds = _parseToSeconds(widget.restTime);
+          _currentSeconds = widget.restTime.inSeconds;
           break;
+
         case TimerPhase.finished: // Fase de final
           _currentSeconds = 0;
           _timer?.cancel();
@@ -127,15 +120,12 @@ class BjjTimerCoreState extends State<BjjTimerCore> {
           // para que el usuario vea que llegó a 0
           Future.delayed(const Duration(seconds: 1), () {
             if (mounted) {
-              if (!widget.isRound) {
-                Navigator.of(context).pop();
-              } else {
-                return;
-              }
+              Navigator.of(context).pop();
             }
           });
           return;
       }
+
       // Darle color al fondo
       Future.microtask(() async {
         if (mounted) {
@@ -152,7 +142,18 @@ class BjjTimerCoreState extends State<BjjTimerCore> {
       if (isPaused) return;
 
       if (_currentSeconds > 0) {
-        setState(() => _currentSeconds--);
+        setState(() {
+          _currentSeconds--;
+
+          // // --- LÓGICA DE ÚLTIMOS 10 SEGUNDOS ---
+          // if (_phase == TimerPhase.fighting && _currentSeconds == 10) {
+          //   // 1. Sonido de aviso (asegúrate de tenerlo en tu AudioService)
+          //   AudioService.playTenSecondsWarning();
+
+          //   // 2. Cambiar color de fondo (notificar al padre)
+          //   widget.onColorChange?.call(Colors.redAccent);
+          // }
+        });
       } else {
         _handlePhaseTransition();
       }
@@ -206,9 +207,7 @@ class BjjTimerCoreState extends State<BjjTimerCore> {
   }
 
   String _getFormatTime() {
-    int m = _currentSeconds ~/ 60;
-    int s = _currentSeconds % 60;
-    return "${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}";
+    return Duration(seconds: _currentSeconds).toMinutesSeconds();
   }
 
   Color _getPhaseColor() {
@@ -227,28 +226,16 @@ class BjjTimerCoreState extends State<BjjTimerCore> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.max,
       children: [
-        if (widget.isRound) ...[
-          // Si isRound es verdadero, SOLO se muestra esto
-          Text(
-            "R $_currentRound/${widget.totalRounds}",
-            style: widget.textStyle,
-          ),
-        ] else ...[
-          // Si isRound es falso, se muestra toda la lógica del temporizador
-          if (_phase != TimerPhase.fighting)
-            Text(switch (_phase) {
-              TimerPhase.preparation => "¡PREPÁRATE!",
-              TimerPhase.resting => "DESCANSO",
-              TimerPhase.finished => "¡FINALIZADO!",
-              _ => "",
-            }, style: widget.textStyle),
-
-          const SizedBox(height: 20),
-
-          Text(_getFormatTime(), style: widget.textStyle),
-        ],
+        if (_phase != TimerPhase.fighting)
+          Text(switch (_phase) {
+            TimerPhase.preparation => "¡PREPÁRATE!",
+            TimerPhase.resting => "DESCANSO",
+            TimerPhase.finished => "¡FINALIZADO!",
+            _ => "",
+          }),
+        Text(_getFormatTime(), style: TextStyle(fontWeight: FontWeight.w900)),
       ],
     );
   }

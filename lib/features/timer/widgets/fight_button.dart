@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:bjj_timer/features/timer/screens/bjj_timer_fight_home.dart';
 
 class FightButton extends StatelessWidget {
-  final String sparringTime;
-  final String restTime;
-  final String rondas;
+  final Duration sparringTime;
+  final Duration restTime;
+  final int rondas;
 
   const FightButton({
     super.key,

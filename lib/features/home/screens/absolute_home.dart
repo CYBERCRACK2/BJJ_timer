@@ -16,7 +16,7 @@ class AbsoluteHome extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ModeSelect(
-              name: "Open mat",
+              name: "OPEN MAT",
               onPressed: () {
                 Navigator.push(
                   context,
