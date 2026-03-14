@@ -153,6 +153,10 @@ class BjjTimerCoreState extends State<BjjTimerCore> {
           //   // 2. Cambiar color de fondo (notificar al padre)
           //   widget.onColorChange?.call(Colors.redAccent);
           // }
+          // Opcional: Un "beep" corto cada segundo de los últimos 5
+          // if (_currentSeconds <= 5) {
+          //   AudioService.playShortBeep();
+          // }
         });
       } else {
         _handlePhaseTransition();
@@ -234,8 +238,13 @@ class BjjTimerCoreState extends State<BjjTimerCore> {
             TimerPhase.resting => "DESCANSO",
             TimerPhase.finished => "¡FINALIZADO!",
             _ => "",
-          }),
-        Text(_getFormatTime(), style: TextStyle(fontWeight: FontWeight.w900)),
+          }, style: Theme.of(context).textTheme.headlineMedium),
+        Text(
+          _getFormatTime(),
+          style: Theme.of(
+            context,
+          ).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.w900),
+        ),
       ],
     );
   }

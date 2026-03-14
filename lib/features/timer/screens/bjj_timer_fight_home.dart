@@ -49,6 +49,8 @@ class _BjjTimerFightState extends State<BjjTimerFight> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     double diagonal = math.sqrt(
       screenWidth * screenHeight + screenWidth * screenHeight,
@@ -78,7 +80,9 @@ class _BjjTimerFightState extends State<BjjTimerFight> {
         onLongPress: () => _resetTimer(),
         child: Scaffold(
           backgroundColor: currentColor,
-          appBar: AppBar(backgroundColor: Colors.transparent),
+          appBar: isLandscape
+              ? null
+              : AppBar(backgroundColor: Colors.transparent),
           body: Stack(
             children: [
               Column(
@@ -87,7 +91,7 @@ class _BjjTimerFightState extends State<BjjTimerFight> {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: FittedBox(
                         child: BjjTimerCore(
                           fightTime: widget

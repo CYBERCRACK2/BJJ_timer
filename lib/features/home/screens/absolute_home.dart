@@ -1,4 +1,5 @@
-import 'package:bjj_timer/features/class/bjj_class_home.dart';
+import 'package:bjj_timer/features/class/screens/bjj_class_home.dart';
+import 'package:bjj_timer/features/home/screens/info.dart';
 import 'package:bjj_timer/features/timer/screens/bjj_timer_home.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -9,32 +10,58 @@ class AbsoluteHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ModeSelect(
-              name: "OPEN MAT",
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => BjjTimerHome()),
-                );
-              },
+      appBar: AppBar(
+        title: Text("BJJ home", textAlign: TextAlign.center),
+        actions: [
+          Builder(
+            builder: (context) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Info()),
+                    );
+                  },
+                  icon: Icon(Icons.info),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Center(
+          child: FittedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              spacing: 20,
+              children: [
+                ModeSelect(
+                  name: "OPEN MAT",
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BjjTimerHome()),
+                    );
+                  },
+                ),
+                ModeSelect(
+                  name: "CLASS",
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BjjClassHome()),
+                    );
+                  },
+                ),
+                SizedBox(height: 20),
+              ],
             ),
-            ModeSelect(
-              name: "Class",
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => BjjClassHome()),
-                );
-              },
-            ),
-            SizedBox(height: 20),
-          ],
+          ),
         ),
       ),
     );
@@ -62,7 +89,12 @@ class ModeSelect extends StatelessWidget {
         onPressed: onPressed,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(name, style: TextStyle(fontSize: 0.07 * resolution)),
+          child: Text(
+            name,
+            style: Theme.of(
+              context,
+            ).textTheme.labelLarge?.copyWith(fontSize: 0.07 * resolution),
+          ),
         ),
       ),
     );

@@ -19,10 +19,7 @@ class _BjjTimerHomeState extends State<BjjTimerHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("MODO open mat", textAlign: TextAlign.center),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text("MODO open mat")),
       body: Column(
         children: [
           Expanded(

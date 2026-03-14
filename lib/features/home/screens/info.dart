@@ -6,7 +6,7 @@ class Info extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("info")),
+      appBar: AppBar(title: const Text("info"), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(

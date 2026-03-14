@@ -21,6 +21,10 @@ class AudioService {
     }
   }
 
+  static Future<void> stop() async {
+    await _player.stop();
+  }
+
   static Future<void> pause() async {
     await _player.pause();
   }
@@ -44,7 +48,7 @@ class AudioService {
   }
 
   // Sonidos predefinidos
-  static void playStartBell() => playEffect("sounds/ringstimer.wav");
+  static void playStartBell() => playEffect("sounds/ringstimer2.wav");
   static void playEndBell() => playEffect("sounds/BoxingBell.wav");
 
   // Limpieza total

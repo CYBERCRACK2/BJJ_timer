@@ -1,60 +1,79 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   final bool isDarkMode;
-
   AppTheme({required this.isDarkMode});
-  // Define your seed colors here or pass them directly
+
   static const Color _seedColor = Color.fromARGB(255, 118, 4, 0);
 
-  // Cambiar la fuente
-  static const String fontFamilyName = 'Verdana';
+  ThemeData getTheme() {
+    return ThemeData(
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: _seedColor,
+        brightness: isDarkMode ? Brightness.dark : Brightness.light,
+      ),
+      // Aplicamos la fuente agresiva (Anton) manteniendo tus estilos definidos abajo
+      textTheme: GoogleFonts.blackOpsOneTextTheme(_bjjTextTheme).copyWith(
+        bodyMedium: _bjjTextTheme.bodyMedium,
+        headlineLarge: _bjjTextTheme.headlineLarge,
+        displayMedium: _bjjTextTheme.displayMedium,
+      ),
+      appBarTheme: AppBarTheme(centerTitle: true),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+      ),
+    );
+  }
 
   static const TextTheme _bjjTextTheme = TextTheme(
     headlineLarge: TextStyle(
-      fontSize: 350,
+      fontSize: 350, // Respetado tu tamaño original
       fontWeight: FontWeight.bold,
       letterSpacing: -1.5,
-      fontFamily: fontFamilyName, // Applied here
+      fontFamily: 'verdana',
     ),
     displayLarge: TextStyle(
       fontSize: 96,
       fontWeight: FontWeight.bold,
       letterSpacing: -1.5,
-      fontFamily: fontFamilyName, // Applied here
+    ),
+    displayMedium: TextStyle(
+      fontSize: 120,
+      fontWeight: FontWeight.bold,
+      letterSpacing: -1.5,
+      fontFamily: 'verdana',
     ),
     headlineMedium: TextStyle(
       fontSize: 54,
       fontWeight: FontWeight.w600,
       letterSpacing: 0.25,
-      fontFamily: fontFamilyName, // Applied here
     ),
     headlineSmall: TextStyle(
       fontSize: 54,
       fontWeight: FontWeight.w600,
       letterSpacing: 0.25,
-      fontFamily: fontFamilyName, // Applied here
     ),
     labelLarge: TextStyle(
       fontSize: 26,
       fontWeight: FontWeight.bold,
       letterSpacing: 1.25,
-      fontFamily: fontFamilyName, // Applied here
     ),
     bodyMedium: TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.normal,
       letterSpacing: 0.5,
-      fontFamily: fontFamilyName, // Applied here
+      fontFamily: 'verdana',
     ),
-  );
-
-  ThemeData getTheme() => ThemeData(
-    useMaterial3: true,
-    textTheme: _bjjTextTheme,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: _seedColor,
-      brightness: isDarkMode ? Brightness.dark : Brightness.light,
+    bodySmall: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.normal,
+      letterSpacing: 0.5,
     ),
   );
 }

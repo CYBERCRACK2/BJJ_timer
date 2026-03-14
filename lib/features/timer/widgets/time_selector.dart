@@ -41,9 +41,10 @@ class SelectorBjj<T> extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 8),
+                  // Label de la tarjeta
                   Text(
                     label.toUpperCase(),
-                    style: TextStyle(
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontSize: baseUnit * 0.05,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary,
@@ -80,11 +81,10 @@ class SelectorBjj<T> extends StatelessWidget {
                                     else
                                       RoundFormatter(),
                                   ],
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize:
-                                        100, // Tamaño base grande para calidad de renderizado
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium
+                                      ?.copyWith(fontWeight: FontWeight.bold),
                                   decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     isDense: true,

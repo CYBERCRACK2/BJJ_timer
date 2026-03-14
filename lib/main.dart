@@ -1,10 +1,22 @@
 import 'package:bjj_timer/features/home/screens/absolute_home.dart';
-import 'package:bjj_timer/features/home/screens/info.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'config/app_theme.dart';
 
-void main() {
-  runApp(MainApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // 1. Permitir todas las orientaciones de forma controlada
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight,
+  ]);
+
+  // 2. Modo inmersivo para que las barras de Android no tapen el reloj
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -13,34 +25,11 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "BJJ Timer",
       theme: AppTheme(isDarkMode: false).getTheme(),
       darkTheme: AppTheme(isDarkMode: true).getTheme(),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("BJJ home", textAlign: TextAlign.center),
-          actions: [
-            Builder(
-              builder: (context) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Info()),
-                      );
-                    },
-                    icon: Icon(Icons.info),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-        body: AbsoluteHome(),
-      ),
-      debugShowCheckedModeBanner: false,
+      home: const AbsoluteHome(),
     );
   }
 }
